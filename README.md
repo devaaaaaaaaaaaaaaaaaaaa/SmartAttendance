@@ -10,11 +10,14 @@ Aplikasi presensi berbasis Android dengan konsep offline-first.
 - Riwayat presensi
 
 ## Teknologi
-- Kotlin
-- Jetpack Compose
-- Room Database
-- Firebase Auth & Firestore
-- CameraX
+- Android Studio
+- Kotlin Jetpack Compose (UI modern)
+- Jetpack Navigation (navigasi antar layar)
+- CameraX (foto selfie saat presensi)
+- Location Based Service (LBS) (cek koordinat presensi)
+- Room Database (data offline)
+- Firebase Authentication (login)
+- Firebase Firestore (sinkronisasi presensi)
 
 ## Konsep
 Offline-first: data presensi tetap tersimpan meskipun jaringan tidak stabil.
