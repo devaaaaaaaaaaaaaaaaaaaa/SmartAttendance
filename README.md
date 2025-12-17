@@ -21,3 +21,9 @@ Aplikasi presensi berbasis Android dengan konsep offline-first.
 
 ## Konsep
 Offline-first: data presensi tetap tersimpan meskipun jaringan tidak stabil.
+
+## How to Run
+1. Clone repository
+2. Tambahkan `google-services.json` milik Firebase sendiri
+3. Sync Gradle
+4. Run di Android Studio
