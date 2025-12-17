@@ -9,7 +9,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -17,7 +16,6 @@ import com.example.smartattendance.ui.camera.CameraCapture
 import com.example.smartattendance.ui.viewmodel.AttendanceViewModel
 import com.example.smartattendance.util.LocationUtils
 import com.example.smartattendance.util.NetworkObserver
-import com.example.smartattendance.util.SimpleLocation
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -69,39 +67,39 @@ fun AttendanceScreen(
         }
     }
 
-    // AUTO SYNC saat internet kembali
-    LaunchedEffect(isConnected) {
-        if (isConnected) {
-            snackbarHostState.showSnackbar(
-                message = "Koneksi tersedia, sinkronisasi data..."
-            )
-            viewModel.sync(userId)
-            snackbarHostState.showSnackbar(
-                message = "Data berhasil disinkronkan"
-            )
-        }
-    }
-
     // Presensi setelah foto diambil
     LaunchedEffect(photoFile) {
         photoFile?.let { file ->
             val loc = LocationUtils.getCurrentLocation(context)
             if (loc != null) {
-                viewModel.saveAttendance(
+
+                viewModel.saveAttendanceSuspend(
                     userId = userId,
                     latitude = loc.latitude,
                     longitude = loc.longitude,
                     photoPath = file.absolutePath
                 )
 
-                snackbarHostState.showSnackbar(
-                    message = "Presensi tersimpan (offline)"
-                )
-            } else {
-                snackbarHostState.showSnackbar(
-                    message = "Gagal mendapatkan lokasi"
-                )
+                viewModel.sync(userId)
+
+                val message = if (isConnected)
+                    "Presensi tersimpan & disinkronkan"
+                else
+                    "Presensi tersimpan (offline)"
+
+                snackbarHostState.showSnackbar(message)
             }
+        }
+    }
+
+
+    // AUTO SYNC saat internet kembali
+    LaunchedEffect(isConnected) {
+        if (isConnected) {0
+            snackbarHostState.showSnackbar(
+                message = "Koneksi tersedia, sinkronisasi data..."
+            )
+            viewModel.sync(userId)
         }
     }
 

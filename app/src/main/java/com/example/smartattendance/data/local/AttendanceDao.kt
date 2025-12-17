@@ -2,7 +2,6 @@ package com.example.smartattendance.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.smartattendance.data.model.AttendanceRecord
 import kotlinx.coroutines.flow.Flow

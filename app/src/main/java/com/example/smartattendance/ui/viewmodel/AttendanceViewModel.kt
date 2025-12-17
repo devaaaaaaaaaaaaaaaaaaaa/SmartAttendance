@@ -26,25 +26,24 @@ class AttendanceViewModel(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun saveAttendance(
+    suspend fun saveAttendanceSuspend(
         userId: String,
         latitude: Double,
         longitude: Double,
         photoPath: String
     ) {
-        viewModelScope.launch {
-            repo.saveLocal(
-                AttendanceRecord(
-                    userId = userId,
-                    timestamp = LocalDateTime.now().toString(),
-                    latitude = latitude,
-                    longitude = longitude,
-                    photoPath = photoPath,
-                    synced = false
-                )
+        repo.saveLocal(
+            AttendanceRecord(
+                userId = userId,
+                timestamp = LocalDateTime.now().toString(),
+                latitude = latitude,
+                longitude = longitude,
+                photoPath = photoPath,
+                synced = false
             )
-        }
+        )
     }
+
 
     fun sync(userId: String) {
         viewModelScope.launch {
